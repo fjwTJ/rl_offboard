@@ -1,5 +1,4 @@
-
-初版无人机目标识别追踪offboard控制系统
+ROS2下offboard控制无人机yolo识别目标并追踪
 
 yolo_detector: 基于YOLOv11的目标检测与追踪节点（yolo模型存放在/src/yolo_detector）
   
