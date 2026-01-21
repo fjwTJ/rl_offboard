@@ -23,6 +23,7 @@ class TrackerNode(Node):
         self.kz = 0.6  # 上下
         self.k_yaw = 0.3
         self.desired_dist = 3  # 目标距离 m
+        self.yaw_enable_vy_rad = math.radians(45.0)
 
     def _publish_static_tf(self):
         # base_link_frd -> camera_optical_frame
@@ -54,7 +55,10 @@ class TrackerNode(Node):
         yaw_error = math.atan2(Y, X)
         # 前后误差：希望距离固定
         vx = self.kx * (X - self.desired_dist)
-        vy = self.ky * Y
+        # yaw 对齐后再逐步启用侧向速度
+        beta = 1.0 - min(abs(yaw_error) / self.yaw_enable_vy_rad, 1.0)
+        vy = beta * self.ky * Y
+
         vz = self.kz * Z
         yaw_rate = -self.k_yaw * yaw_error
 
