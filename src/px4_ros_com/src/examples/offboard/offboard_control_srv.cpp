@@ -265,6 +265,8 @@ void OffboardControl::publish_velocity_setpoint(float vx, float vy, float vz, fl
                     std::numeric_limits<float>::quiet_NaN(),
                     std::numeric_limits<float>::quiet_NaN()};
     msg.velocity = {vx, vy, vz};
+    // Use yawspeed when yaw is NaN; otherwise PX4 prioritizes yaw and ignores yawspeed.
+    msg.yaw = std::numeric_limits<float>::quiet_NaN();
     msg.yawspeed = yaw_rate;
     msg.timestamp = this->get_clock()->now().nanoseconds() / 1000;
     trajectory_setpoint_publisher_->publish(msg);
