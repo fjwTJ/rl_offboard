@@ -18,7 +18,7 @@ class TrackerNode(Node):
         self.tf_buffer = tf2_ros.Buffer()
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
         self.tf_static_broadcaster = tf2_ros.StaticTransformBroadcaster(self)
-        self.declare_parameter("use_sim_tf", False)
+        self.declare_parameter("use_sim_tf", True)
         self.use_sim_tf = self.get_parameter("use_sim_tf").get_parameter_value().bool_value
         self._publish_static_tf()
         # PID 参数
